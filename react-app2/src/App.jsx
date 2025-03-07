@@ -3,7 +3,7 @@ import useWebSocket from 'react-use-websocket';
 
 const SOCKET_URL = 'ws://localhost:8080';
 
-const App = () => {
+function LaunchAndListen() {
 	const [message, setMessage] = useState('');
 	const [receivedMessage, setReceivedMessage] = useState('');
 	const {sendMessage, lastMessage} = useWebSocket(SOCKET_URL, {share: true});
@@ -17,6 +17,11 @@ const App = () => {
 			}
 		}
 	}, [lastMessage]);
+	return {message, setMessage, receivedMessage, sendMessage};
+}
+
+const App = () => {
+	const {message, setMessage, receivedMessage, sendMessage} = LaunchAndListen();
 
 	return (
 		<div>
