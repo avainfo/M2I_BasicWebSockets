@@ -1,0 +1,43 @@
+version: "3.8"
+
+services:
+  # =========================
+  # Serveur WebSocket
+  # =========================
+  server:
+    build:
+      context: ./websocket-server
+      dockerfile: Dockerfile
+    container_name: websocket_server
+    ports:
+      - "8080:8080"
+    # Redémarre automatiquement si le container s'arrête
+    restart: always
+
+  # =========================
+  # Application React 1
+  # =========================
+  react-app1:
+    build:
+      context: ./react-app1
+      dockerfile: Dockerfile
+    container_name: react_app_1
+    ports:
+      - "3001:80"
+    depends_on:
+      - server
+    restart: always
+
+  # =========================
+  # Application React 2
+  # =========================
+  react-app2:
+    build:
+      context: ./react-app2
+      dockerfile: Dockerfile
+    container_name: react_app_2
+    ports:
+      - "3002:80"
+    depends_on:
+      - server
+    restart: always
